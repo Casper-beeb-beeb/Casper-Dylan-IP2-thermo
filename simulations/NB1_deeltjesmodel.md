@@ -77,11 +77,19 @@ Wat op zou kunnen vallen is dat de snelheid in een cel constant gehouden wordt (
 Maak het tijdsinterval $dt$ groter en vergelijk de afgelegde weg in de tien seconde. Wat gebeurt er met de afgelegde weg als we $dt$ groter maken? Is dat logisch vanuit gezien de natuurkunde? En gezien de methode van discretisatie? Leg uit.
 ```
 
+```python
+# Als dt kleiner wordt dan wordt de simulatie minder accuraat. In dit geval heeft het vooral ivloed op de afstand, die versneld wordt. De andere is een rechte lijn, en dit gaat wel goed, ook met een grotere dt.
+# De fietser legt minder afstand af naarmate dt groter wordt, aangezien de snelheid pas wordt aangepast nadat de positie wordt aangepast.
+```
 
 <!-- Jouw antwoord hier  -->
 
 ```python
-%reset -f  #clears memory as we don't need it further down 
+%reset -f  
+#clears memory as we don't need it further down 
+
+
+
 ```
 
 ## Naar een deeltjesmodel
@@ -97,6 +105,7 @@ Een *class* is een blauwdruk voor het creëren van objecten (zoals deeltjes, ato
 # Merk op dat de class zelf geen deeltje is! 
 # Een object dat tot een bepaalde class behoort, wordt een instant van die class genoemd. 
 # Je kunt meerdere instants van een class hebben.
+import numpy as np
 
 class ParticleClass:
     def __init__(self, m, v, r, R):
@@ -181,6 +190,10 @@ Voorspel en controleer vervolgens met onderstaande code.
 ```
 
 ```python
+# v=[2.0,0] voor allemaal, er zijn geen krachten/versnellingen, dus ze gaan allemaal met 2*dt naar rechts
+```
+
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -229,7 +242,11 @@ En als je wilt gaan voor een uitdaging:
 ```
 
 ```python
-### YOUR CODE HERE ###
+particle_arr= []
+for i in range(0,10):
+    x_start= i
+    particle_arr.append(ParticleClass(m=0, r= x_start, R=0 ,v= np.random.uniform(-5,5)))
+    print(str(particle_arr[i].v))
 ```
 
 Onze simulaties worden snel “zwaar”. Er moeten veel berekeningen gedaan worden en dat kost nu eenmaal tijd. Nu is het wel zo dat sommige berekeningen meer tijd kosten dan anderen. Om te kijken of een stukje code geoptimaliseerd kan worden, moeten we een timer maken. Dat kan met onderstaande code:
